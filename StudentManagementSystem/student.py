@@ -1,5 +1,5 @@
 from database import *
-
+from utils import *
 
 def addStudent():
     students = loadStudents()
@@ -65,7 +65,7 @@ def updateStudent():
         print("No students found.")
         return
     
-    studentID = int(input("enter Car ID: "))
+    studentID = getFloat("enter Car ID: ")
     student = None
 
     for s in students:
@@ -84,7 +84,7 @@ def updateStudent():
         """)
         try:
 
-            choice = int(input("Enter choice: "))
+            choice = getFloat("Enter choice: ")
 
             if choice == "1":
                 student["age"] = int(input("enter new age: "))
@@ -105,7 +105,7 @@ def removeStudent():
         print("No students found.")
         return
     
-    deletedID = int(input("enter deleted student id: "))
+    deletedID = getFloat("enter deleted student id: ")
 
     for s in students:
         if s["id"] == deletedID:
@@ -115,7 +115,7 @@ def removeStudent():
 
 def searchStudent():
     students = loadStudents()
-    searchedID = int(input("enter searched student id: "))
+    searchedID = getFloat("enter searched student id: ")
 
     for s in students:
         if s["id"] == searchedID:
