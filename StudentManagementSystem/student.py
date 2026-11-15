@@ -104,3 +104,23 @@ def removeStudent():
     if not students:
         print("No students found.")
         return
+    
+    deletedID = int(input("enter deleted student id: "))
+
+    for s in students:
+        if s["id"] == deletedID:
+            students.remove(s)
+            print("Student deleted")
+            break
+
+def searchStudent():
+    students = loadStudents()
+    searchedID = int(input("enter searched student id: "))
+
+    for s in students:
+        if s["id"] == searchedID:
+            students = s
+            break
+    else:
+        print("Student not found")
+        return None
