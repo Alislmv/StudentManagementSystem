@@ -2,8 +2,9 @@ from student import *
 from database import *
 from utils import *
 
-
 def menu():
+    loadStudents()
+
     while True:
         print("""
             === Student Management System ===
@@ -16,31 +17,30 @@ def menu():
         """)
 
         try:
-            choice = getFloat("enter your choice: ")
+            choice = getInt("enter your choice: ")
 
             if choice == 1:
                 addStudent()
-                saveStudents()
 
             elif choice == 2:
                 showAllStudents()
 
             elif choice == 3:
                 updateStudent()
-                saveStudents()
 
             elif choice == 4:
                 removeStudent()
-                saveStudents()
-
             elif choice == 5:
                 searchStudent()
 
             elif choice == 6:
                 print("Exiting...")
+                break
 
             else:
                 print("Wrong choice")
 
         except ValueError as e:
             print(e)
+
+menu()

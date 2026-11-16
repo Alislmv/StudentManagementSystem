@@ -5,11 +5,11 @@ def addStudent():
     students = loadStudents()
  
     try:
-        name = input("enter name: ").strip()
-        surname = input("enter name: ").strip()
-        age = int(input("enter name: "))
+        name = getText("enter name: ").strip()
+        surname = getText("enter surname: ").strip()
+        age = getInt("enter age: ")
  
-        grades = input("enter grades: ")
+        grades = getFloat("enter grades: ")
         grades = [int(grades.strip()) for grades in grades.split(",")]
  
         if not name or not surname:
@@ -20,7 +20,7 @@ def addStudent():
             print("age must be greater than 17!")
             return
  
-        if not grades or any(grade < 0 and grade > 100 for grade in grades):
+        if not grades or any(grade < 0 or grade > 100 for grade in grades):
             print("grades must be between 0 and 100!")
             return
  
@@ -87,10 +87,20 @@ def updateStudent():
             choice = getFloat("Enter choice: ")
 
             if choice == "1":
-                student["age"] = int(input("enter new age: "))
+                newAge = getInt("Enter new age: ")
+
+                if newAge >= 17:
+                    student["age"] = newAge
+                    saveStudents(students)
+                    print("Age updated successfully!")
+                else:
+                    print("Age must be 17 or older!")
         
             elif choice == "2":
-                student["grade"] = int(input("enter new grade: "))
+                newGrade = getInt("Enter new grade: ")
+                student["grades"].append(newGrade)
+                saveStudents(students)
+                print("Grade added successfully!")
 
             else:
                 print("Wong choice.")
@@ -110,8 +120,11 @@ def removeStudent():
     for s in students:
         if s["id"] == deletedID:
             students.remove(s)
+            saveStudents(students)
             print("Student deleted")
             break
+    else:
+        print("Student not found.")
 
 def searchStudent():
     students = loadStudents()
@@ -119,8 +132,13 @@ def searchStudent():
 
     for s in students:
         if s["id"] == searchedID:
-            students = s
-            break
+            print(f"""
+            ID: {s["id"]}
+            Name: {s["name"]}
+            Surname: {s["surname"]}
+            Age: {s["age"]}
+            Grades: {s["grades"]}
+        """)
+        break
     else:
-        print("Student not found")
-        return None
+        print("Student not found.")
